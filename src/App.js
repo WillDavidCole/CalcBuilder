@@ -1,24 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import CellList from './components/CellList.js';
+import TextArea from './components/TextArea';
+import BtsNavbar from './components/BtsNavbar';
+import {Row, Col, Container} from 'react-bootstrap';
+import { useState } from 'react';
 
 function App() {
+
+  const [currentFocus, setCurrentFocus] = useState();
+  const [list, setList] = useState({calc: [{id:1, value: 'value'}, {id:2, value: ''}, ] });
+
+  const handleStateChange = ( (calcs) => { setList(calcs)});
+  const handleFocusChange = ( (calc) => {
+                                          setCurrentFocus(calc)}
+                            );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row>
+        <BtsNavbar /> 
+      </Row>
+      <Col md={12}>
+        <Row className="fluid full" >
+          <Col md={9}>
+            <CellList handleStateChange={handleStateChange} handleFocusChange={handleFocusChange} list={list} />
+          </Col>
+          <Col md={3}>
+            <TextArea className="fluid full" currentFocus={currentFocus}/>
+          </Col>
+        </Row>
+      </Col>
+      </Container>
   );
 }
 
